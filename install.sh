@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# install.sh — Setup Tokyo Night theme, Hyprland, Waybar (V1.9c), and Wallpaper Picker
+# install.sh — Setup Tokyo Night theme, Hyprland, Waybar (V1.9c), Zsh, and Wallpaper Picker
 
 set -e
 
@@ -26,6 +26,11 @@ echo "==> Setting up Waybar (V1.9c)..."
 rm -rf "$HOME/.config/waybar"
 ln -sfn "$SCRIPT_DIR/waybar" "$HOME/.config/waybar"
 echo "    ✓ ~/.config/waybar -> $SCRIPT_DIR/waybar"
+
+echo "==> Setting up Zsh (Tokyo Night + Autosuggestions)..."
+mkdir -p "$SCRIPT_DIR/zsh"
+ln -sfn "$SCRIPT_DIR/zsh/.zshrc" "$HOME/.zshrc"
+echo "    ✓ ~/.zshrc -> $SCRIPT_DIR/zsh/.zshrc"
 
 echo "==> Setting up Kitty (Tokyo Night)..."
 mkdir -p "$HOME/.config/kitty"
