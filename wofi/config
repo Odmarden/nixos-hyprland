@@ -1,0 +1,17 @@
+/* Wofi Configuration */
+
+/* Show application icons */
+image_size=32
+allow_images=true
+
+/* General settings */
+width=600
+height=400
+location=center
+orientation=vertical
+halign=fill
+gtk_dark=true
+hide_scroll=true
+no_actions=true
+insensitive=true
+hide_search=false

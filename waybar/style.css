@@ -1,0 +1,229 @@
+/* =============================================================================
+   HANCORE Waybar V1.9c — Tokyo Night Theme (Transparent Bar Background)
+   ============================================================================= */
+
+@define-color bg #1a1b26;
+@define-color bg_alt #24283b;
+@define-color fg #c0caf5;
+@define-color accent #7aa2f7;
+@define-color purple #bb9af7;
+@define-color cyan #7dcfff;
+@define-color green #9ece6a;
+@define-color red #f7768e;
+@define-color ia1 #565f89;
+
+* {
+  border: none;
+  padding: 0px;
+  font-family: JetBrainsMono Nerd Font Propo, JetBrainsMono Nerd Font, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  min-height: 0;
+  transition: background-color .3s ease-out;
+}
+
+/* --- Waybar (Fully transparent background) --- */
+window#waybar {
+  background-color: transparent;
+  background: transparent;
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+#waybar > box {
+  border: none;
+  margin: 0px;
+  background-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  min-height: 28px;
+}
+
+/* --- Modules (Floating segmented pills) --- */
+.modules-left {
+  border-radius: 4px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(122, 162, 247, 0.3);
+  margin: 2px 3px;
+  background-color: rgba(36, 40, 59, 0.92);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+.modules-center {
+  border-radius: 4px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(122, 162, 247, 0.3);
+  margin: 2px 3px;
+  background-color: rgba(36, 40, 59, 0.92);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+#right {
+  margin-right: 3px;
+}
+
+/* --- Workspaces --- */
+button {
+  box-shadow: inset 0 -3px transparent;
+  border: none;
+  border-radius: 0;
+  transition: 0.3s ease-in-out;
+}
+
+button:hover {
+  background: inherit;
+}
+
+#workspaces {
+  background-color: transparent;
+  margin: 2px;
+  padding: 0px 2px;
+  border-radius: 4px;
+}
+
+#workspaces button {
+  color: @fg;
+  background-color: rgba(26, 27, 38, 0.85);
+  padding: 1px 6px;
+  margin: 1px 2px;
+  border-radius: 3px;
+}
+
+#workspaces button.active {
+  background-color: @accent;
+  color: #15161e;
+  font-weight: 900;
+}
+
+#workspaces button.empty {
+  color: @ia1;
+  background: rgba(26, 27, 38, 0.6);
+  opacity: 0.45;
+}
+
+#workspaces button.empty.active {
+  color: #15161e;
+  background: @accent;
+  opacity: 1;
+}
+
+#workspaces button:hover {
+  background-color: @purple;
+  color: #15161e;
+  opacity: 1;
+}
+
+/* --- General Modules --- */
+#tray,
+#custom-mpris,
+#mpris,
+#memory,
+#cpu,
+#battery,
+#network,
+#backlight,
+#bluetooth,
+#pulseaudio,
+#clock {
+  min-width: 14px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 0 2px;
+}
+
+#tray {
+  padding-left: 2px;
+  padding-right: 4px;
+  margin-top: 1px;
+}
+
+#backlight {
+  padding-right: 4px;
+  padding-left: 6px;
+}
+
+#bluetooth {
+  padding-left: 4px;
+}
+
+#bluetooth,
+#memory,
+#cpu,
+#battery,
+#network,
+#backlight,
+#pulseaudio {
+  border-radius: 4px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(122, 162, 247, 0.3);
+  margin: 2px 2px;
+  padding: 0 8px;
+  background-color: rgba(36, 40, 59, 0.92);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+#memory,
+#cpu {
+  min-width: 50px;
+}
+
+tooltip {
+  padding: 6px;
+  background: @bg;
+  font-size: 11px;
+  border: 1px solid @accent;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+tooltip label {
+  color: @fg;
+  font-weight: bold;
+}
+
+#custom-separator {
+  color: @ia1;
+  opacity: 0.4;
+  padding-top: 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#custom-mpris,
+#mpris {
+  color: @fg;
+  padding: 0 10px;
+}
+
+#battery.warning {
+  color: #e0af68;
+  background-color: rgba(36, 40, 59, 0.92);
+}
+
+#battery.critical:not(.charging) {
+  background-color: @red;
+  color: #15161e;
+  animation-name: blink;
+  animation-duration: 0.6s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes blink {
+  to {
+    background-color: rgba(36, 40, 59, 0.92);
+    color: @red;
+  }
+}
