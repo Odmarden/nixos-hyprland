@@ -114,6 +114,9 @@
      wofi
      kitty
      _1password-gui
+     yazi
+     btop
+     fastfetch
      git
      fzf
      zsh-autosuggestions

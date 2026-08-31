@@ -43,8 +43,8 @@ if [ -f /run/current-system/sw/share/zsh-syntax-highlighting/zsh-syntax-highligh
     source /run/current-system/sw/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# Ensure standard path
-export PATH="$HOME/.local/bin:/run/current-system/sw/bin:$PATH"
+# NixOS PATH order: Ensure user binaries and /run/wrappers/bin (SUID wrappers) stay in front
+export PATH="$HOME/.local/bin:$PATH"
 
 # ==============================================================================
 # Aliases & Terminal Shortcuts
