@@ -39,10 +39,19 @@
     LC_TIME = "sv_SE.UTF-8";
   };
 
-  # Enable the GNOME Desktop Environment.
+  # Enable the GNOME Desktop Environment with GDM
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
   
+  # Enable Auto-Login directly to Hyprland for daniel
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "daniel";
+  services.displayManager.defaultSession = "hyprland";
+
+  # Workaround for systemd autologin getty conflicts
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+
   # Enable Hyprland
   programs.hyprland.enable = true;
 
@@ -53,20 +62,6 @@
     syntaxHighlighting.enable = true;
     enableCompletion = true;
   };
-
-  # Show the desktop wallpaper on the GDM login screen.
-  programs.dconf.profiles.gdm.databases = lib.mkForce [
-    {
-      settings = {
-        "org/gnome/desktop/background" = {
-          picture-uri = "file://${/etc/nixos/gdm-background.jpg}";
-          picture-uri-dark = "file://${/etc/nixos/gdm-background.jpg}";
-          picture-options = "zoom";
-        };
-      };
-    }
-    "${pkgs.gdm}/share/gdm/greeter-dconf-defaults"
-  ];
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -93,7 +88,7 @@
   # Enable touchpad support
   services.libinput.enable = true;
 
-  # Define a user account with Zsh shell
+  # Define user account with Zsh shell
   users.users."daniel" = {
     isNormalUser = true;
     description = "Daniel";

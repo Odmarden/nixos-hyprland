@@ -26,6 +26,8 @@ fi
 
 CONFIG_FILE="$HOME/.config/hypr/hyprpaper.conf"
 GIT_CONFIG_FILE="$HOME/git/hypr/hyprpaper.conf"
+LOCK_CONFIG="$HOME/.config/hypr/hyprlock.conf"
+GIT_LOCK_CONFIG="$HOME/git/hypr/hyprlock.conf"
 STATE_FILE="$HOME/.cache/current_wallpaper"
 
 notify() {
@@ -67,7 +69,7 @@ apply_wallpaper() {
         fi
     fi
 
-    # Persist config with modern block syntax
+    # Persist hyprpaper config
     local cfg_content="preload = $wp
 
 wallpaper {
@@ -80,6 +82,14 @@ ipc = on"
 
     echo "$cfg_content" > "$CONFIG_FILE"
     echo "$cfg_content" > "$GIT_CONFIG_FILE"
+
+    # Synchronize hyprlock wallpaper path
+    if [ -f "$GIT_LOCK_CONFIG" ]; then
+        sed -i "s|path = .*|path = $wp|g" "$GIT_LOCK_CONFIG"
+    fi
+    if [ -f "$LOCK_CONFIG" ]; then
+        sed -i "s|path = .*|path = $wp|g" "$LOCK_CONFIG"
+    fi
 
     # Save state
     mkdir -p "$(dirname "$STATE_FILE")"
