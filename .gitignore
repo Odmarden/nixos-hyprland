@@ -2,3 +2,4 @@
 *.old
 *.log
 .DS_Store
+hardware-configuration.nix
