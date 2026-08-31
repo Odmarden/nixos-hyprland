@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# install.sh — Setup Tokyo Night theme, Hyprland, Waybar (V1.9c), Zsh, and Wallpaper Picker
+# install.sh — Setup Tokyo Night theme, Hyprland, Waybar (V1.9c), Zsh, Hyprlock, and Wallpaper Picker
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo "==> Setting up Hyprland configs..."
+echo "==> Setting up Hyprland & Lockscreen configs..."
 mkdir -p "$HOME/.config/hypr"
 if [ -f "$HOME/.config/hypr/hyprland.lua" ]; then
     mv "$HOME/.config/hypr/hyprland.lua" "$HOME/.config/hypr/hyprland.lua.bak"
@@ -20,7 +20,11 @@ CONF
 echo "    ✓ ~/.config/hypr/hyprland.conf (sources $SCRIPT_DIR/hypr/hyprland.conf)"
 
 ln -sfn "$SCRIPT_DIR/hypr/hyprpaper.conf" "$HOME/.config/hypr/hyprpaper.conf"
+ln -sfn "$SCRIPT_DIR/hypr/hypridle.conf"  "$HOME/.config/hypr/hypridle.conf"
+ln -sfn "$SCRIPT_DIR/hypr/hyprlock.conf"  "$HOME/.config/hypr/hyprlock.conf"
 echo "    ✓ ~/.config/hypr/hyprpaper.conf -> $SCRIPT_DIR/hypr/hyprpaper.conf"
+echo "    ✓ ~/.config/hypr/hypridle.conf  -> $SCRIPT_DIR/hypr/hypridle.conf"
+echo "    ✓ ~/.config/hypr/hyprlock.conf  -> $SCRIPT_DIR/hypr/hyprlock.conf"
 
 echo "==> Setting up Waybar (V1.9c)..."
 rm -rf "$HOME/.config/waybar"
