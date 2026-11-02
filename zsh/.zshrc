@@ -56,7 +56,7 @@ alias q="exit"
 alias kali="cd ~/kali && sudo ./boot-kali.sh --persistence"
 
 # NixOS shortcuts
-alias nr="sudo nixos-rebuild switch"
+alias nr="sudo nixos-rebuild switch --option experimental-features 'nix-command flakes'"
 alias nrb="sudo nixos-rebuild dry-build"
 alias ntest="sudo nixos-rebuild test"
 alias ngc="sudo nix-collect-garbage -d"
