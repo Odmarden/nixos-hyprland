@@ -15,8 +15,19 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # llm-agents reference:
+  # let
+  #   llmAgentsFlake = builtins.getFlake "github:numtide/llm-agents.nix";
+  #   llmAgentsSrc = builtins.fetchTarball "https://github.com/numtide/llm-agents.nix/archive/main.tar.gz";
+  #   llmAgents = import llmAgentsSrc { inherit pkgs; };
+  # in
+  # {
+  #   environment.systemPackages = [
+  #     llmAgentsFlake.packages.${pkgs.stdenv.hostPlatform.system}.default
+  #   ];
+  # }
+
   networking.hostName = "nixos"; # Define your hostname.
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -108,8 +119,6 @@
      vim
      wget
      ghostty
-     warp-terminal
-     antigravity
      wordgrinder
      wofi
      kitty
@@ -129,9 +138,31 @@
     enableSSHSupport = true;
   };
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  # Enable the OpenSSH daemon with hardened settings
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
 
-  system.copySystemConfiguration = true;
+  # Intrusion prevention
+  services.fail2ban = {
+    enable = true;
+  };
+
+  # Kernel hardening sysctl
+  boot.kernel.sysctl = {
+    "net.mptcp.enabled" = 0;
+    "net.ipv4.conf.all.rp_filter" = 1;
+    "net.ipv4.conf.default.rp_filter" = 1;
+    "net.ipv4.tcp_syncookies" = 1;
+    "kernel.dmesg_restrict" = 1;
+    "kernel.kptr_restrict" = 2;
+  };
+
+  system.copySystemConfiguration = false;
   system.stateVersion = "26.05";
 }
