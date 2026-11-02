@@ -4,6 +4,17 @@
 
 { config, lib, pkgs, ... }:
 
+let
+  llmAgents = builtins.getFlake "github:numtide/llm-agents.nix";
+  antigravity-cli = llmAgents.packages.${pkgs.stdenv.hostPlatform.system}.antigravity-cli;
+  antigravity = pkgs.symlinkJoin {
+    name = "antigravity";
+    paths = [ antigravity-cli ];
+    postBuild = ''
+      ln -s $out/bin/agy $out/bin/antigravity
+    '';
+  };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -15,17 +26,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # llm-agents reference:
-  # let
-  #   llmAgentsFlake = builtins.getFlake "github:numtide/llm-agents.nix";
-  #   llmAgentsSrc = builtins.fetchTarball "https://github.com/numtide/llm-agents.nix/archive/main.tar.gz";
-  #   llmAgents = import llmAgentsSrc { inherit pkgs; };
-  # in
-  # {
-  #   environment.systemPackages = [
-  #     llmAgentsFlake.packages.${pkgs.stdenv.hostPlatform.system}.default
-  #   ];
-  # }
+  # Nix configuration and Flakes support
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "root" "@wheel" ];
+    extra-substituters = [ "https://cache.numtide.com" ];
+    extra-trusted-public-keys = [
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+    ];
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
 
@@ -130,6 +139,7 @@
      fzf
      zsh-autosuggestions
      zsh-syntax-highlighting
+     antigravity
    ];
 
   programs.mtr.enable = true;
