@@ -53,6 +53,7 @@ alias c="clear"
 alias r="systemctl reboot"
 alias s="systemctl poweroff"
 alias q="exit"
+alias kali="cd ~/kali && sudo ./boot-kali.sh --persistence"
 
 # NixOS shortcuts
 alias nr="sudo nixos-rebuild switch"
